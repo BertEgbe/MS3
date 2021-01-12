@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+    <header class="header-text center-align teal-text text-darken-4">
+        <h1>Recipe List</h1>
+        <p class="lrg-paragraph-txt"><strong>Search, sort, filter and add recipes</strong></p>
+    </header>
+    
+    <div class="container col s10 m9 offset-m1 grey lighten-4 content-container" id="recipe-search">
+        <div class="row mb-9">
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="flashes {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            
+            <form>
+                <div class="col s5 m3">
+                    <div class="input-field col s10">
+                        <i class="material-icons prefix teal-text text-darken-1">search</i>
+                        <input id="recipe_search" name="recipe_search" type="text" autocomplete="false">
+                        <input id="recipe_search" name="recipe_search" type="text" autocomplete="off">
+                        <label for="recipe_search">Search</label>
+                    </div>
+                </div>
+                <div class="col s4 m2">
+                    <button class="btn waves-effect waves-light submit-btn mt-20" type="submit" id="recipe-search-btn">Search</button>
+                </div>
+            </form>
+            
+            <form>
+                <div class="col s6 m4">
+                    <div class="input-field col s10" id="delicacy-select">
+                        <select id="delicacy-filter" name="delicacy_select">
+                            <option value="" disabled selected>Delicacy</option>
+                            {% for delicacy in delicacies %}
+                            <option value="{{ delicacy.delicacy_name }}">{{ delicacy.delicacy_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="delicacy-filter">Filter by Delicacy</label>
+                    </div>
+                </div>
+                <div class="col s5 m2">
+                    <button class="btn waves-effect waves-light submit-btn mt-18" type="submit" id="delicacy-filter-btn">Filter</button>
+                </div>  
+                </form>
+            
+        </div>
+        <div class="row mb-9">
+            <div class="col s10 m5 center-align">
+                <form>
+                    <p class="teal-text text-darken-4">Sort All Recipes By: </p>
+                    <button class="btn waves-effect waves-light btn-small" type="submit" name="sort" value="votes">Votes</button>
+                    <button class="btn waves-effect waves-light btn-small" type="submit" name="sort" value="asc">A-Z</button>
+                    <button class="btn waves-effect waves-light btn-small" type="submit" name="sort" value="dsc">Z-A</button>
+                </form>
+            </div>
+            
+            <div class="col s12 m6 grey-text text-darken-2 center-align s-mt-18">
+                <a href="{{ url_for('recipelist') }}" class="waves-effect waves-light btn-small ml-18">Reset</a>
+                <p class="mt-28"><strong>
+                {% if recipes|length <= 0 %}
+                    0 Results found...
+                {% elif recipes|length == 1 %} 
+                 1 Result found...
+                {% else %}
+                    {{recipes|length}} Results found...
+                {% endif %}
+                </strong></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container col s10 m9 offset-m1 grey-text text-darken-2 content-container mt-18">
+        <div class="row">
+            
+            {% if recipes|length <= 0 %}
+                <p class="grey-text text-darken-3 center-align"><strong>There are no recipes matching this criteria</strong></p>
+            {% else %}
+                {% for recipe in recipes %}
+                <div class="col s10 m5 l6 xl4 recipe-card">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ recipe.image_url }}">
+                            <img src="{{ recipe.image_url }}" alt="{{ recipe.recipe_name }}">
+                        </div>
+                        <div class="card-content">
+                            <h6>{{ recipe.recipe_name}}</h6>

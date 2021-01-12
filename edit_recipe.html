@@ -1,0 +1,82 @@
+ <!-- Ingredients section -->
+                <div class="row">
+                    <div class="ingredients">
+                        <h5 class="mb-20 center-align teal-text text-darken-3"><strong>Ingredients</strong></h5>
+                        
+                        {% for ing in recipe.ingredients %}
+                        <div class="ingredient">
+                            <div class="input-field col s3">
+                                <input id="quantity" name="ingredient-qty-{{ loop.index }}" type="text" class="validate" value="{{ ing[0] }}" autocomplete="off" required>
+                                <label for="quantity">Quantity</label>
+                            </div>
+                            <div class="input-field col s8">
+                                <select class="ingredient-list" name="ingredient-name-{{ loop.index }}" required>
+                                    <option value="" disabled>Select Ingredient</option>
+                                    {% for ingredient in ingredients %}
+                                        {% if ingredient.ingredient_name == ing[1] %}
+                                            <option value="{{ ingredient.ingredient_name }}" selected>{{ ingredient.ingredient_name }}</option>
+                                        {% else %}
+                                            <option value="{{ ingredient.ingredient_name }}">{{ ingredient.ingredient_name }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        {% endfor %}
+ 
+                    </div>
+                    <div class="row">
+                        <div class="col s12" id="ingredients-buttons">
+                            <div class="col s12 m6 l4">
+                                <a class="waves-effect waves-light btn-floating btn-small add-ingredient-btn" name="add-ing-btn"><i class="material-icons left">add</i></a>
+                                <label for="add-ing-btn">Add Next Ingredient</label>
+                            </div>
+                            <div class="col s12 m6 l4">
+                                <a class="waves-effect waves-light btn-floating btn-small remove-ingredient-btn" name="remove-ing-btn"><i class="material-icons left">remove</i></a>
+                                <label for="remove-ing-btn">Remove Last Ingredient</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="mb-40">
+                
+                <!-- Method section -->
+                <div class="row">
+                    <div class="method">
+                        <h5 class="mb-0 center-align teal-text text-darken-4"><strong>Method</strong></h5>
+                        <div class="input-field col s12 mt-0">
+                            <ol id="steps-list" class="mt-10">
+                                
+                                {% for step in recipe.method %}
+                                <li class="step">
+                                    <input name="step-{{ loop.index }}" type="text" class="validate" value="{{ step }}" autocomplete="off" required>
+                                </li>
+                                {% endfor %}
+                                
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col s12" id="method-buttons">
+                            <div class="col s10 m6 l2">
+                                <a class="waves-effect waves-light btn-floating btn-small add-step-btn" name="add-step-btn"><i class="material-icons left">add</i></a>
+                                <label for="add-step-btn">Add Next Step</label>
+                            </div>
+                            <div class="col s10 m6 l2">
+                                <a class="waves-effect waves-light btn-floating btn-small remove-step-btn" name="remove-step-btn"><i class="material-icons left">remove</i></a>
+                                <label for="remove-step-btn">Remove Last Step</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Submit Recipe-->
+                <button class="btn waves-effect waves-light submit-btn" type="submit" name="action">Save Changes</button>
+                <a href="/recipelist" class="waves-effect waves-light btn red darken-2 submit-btn mt-20">Cancel</a>
+                <a href="{{ url_for('recipelist') }}" class="waves-effect waves-light btn red darken-2 submit-btn mt-20">Cancel</a>
+            </form>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,21 @@
+<form action="{{ url_for('home') }}" method="POST">
+                <div class="input-field col s10">
+                    <i class="material-icons prefix teal-text text-darken-1">account_circle</i>
+                    <input id="username" name="username" type="text" class="validate" maxlength="15" pattern="^[a-zA-Z0-9]*$" autofocus required>
+                    <label for="username">Username</label>
+                    <span class="helper-text" data-error="Username should be 5-15 alphanumeric characters with no spaces"></span>
+                </div>
+                <div class="input-field col s10">
+                    <i class="material-icons prefix teal-text text-darken-1">lock_open</i>
+                    <input id="password" name="password" type="password" class="validate" pattern='^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$' required>
+                    <label for="password">Password</label>
+                    <span class="helper-text" data-error="Password should be 5-15 long, made up of alphanumeric and special characters"></span>
+                </div>
+                <button class="btn waves-effect waves-light submit-btn center-align" type="submit" name="action">Submit</button>
+            </form>
+            <p class="center-align teal-text text-darken-3 sml-paragraph-txt mt-19">Not registered already? Sign up <a href="/signup">Here</a></p>
+            <p class="center-align teal-text text-darken-3 sml-paragraph-txt mt-19">Not registered already? Sign up <a href="{{ url_for('signup') }}">Here</a></p>
+        </div>
+    </div>
+
+{% endblock %}
